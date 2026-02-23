@@ -7,7 +7,7 @@ class TradingStrategy(Strategy):
 
    @property
    def assets(self):
-      return ["SPY", "QQQ", "VTI", "VXUS"]
+      return ["NVDA"]
 
    @property
    def interval(self):
