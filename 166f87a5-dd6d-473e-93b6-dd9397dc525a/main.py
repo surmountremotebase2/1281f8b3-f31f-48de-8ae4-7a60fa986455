@@ -23,6 +23,7 @@ class TradingStrategy(Strategy):
          try: rsi_dict[ticker] = RSI(ticker, data, 14)[-1]
          except: rsi_dict[ticker] = 1
 
+      RSI('TQQQ', data, 14)
       allocation_dict = {i: rsi_dict[i]/(sum(rsi_dict.values())+10) for i in self.assets}
       for key in allocation_dict:
          if abs(allocation_dict[key]-holdings.get(key, 0))>0.02:
