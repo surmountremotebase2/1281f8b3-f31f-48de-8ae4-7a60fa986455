@@ -6,11 +6,13 @@ class TradingStrategy(Strategy):
     exercise buy, sell, orphan, partial/residual-cash, full-liquidation, and
     over-allocation normalization. Deterministic and restart-safe via
       self.count, which the live runner persists across invocations."""
+    persistent_attrs = ["run_count"]    
 
     def __init__(self):
         # Overwritten with the persisted value before run() by the runner
         # (base_class: if hasattr(strategy, "count"): strategy.count = tracker.get_count()).
         self.count = 0
+        self.run_count = 0
 
         # One entry per rebalance. Ordered so consecutive steps force the
         # transitions we want to test (deploy -> orphan -> rotate -> all-cash -> redeploy ...).
@@ -39,4 +41,5 @@ class TradingStrategy(Strategy):
     def run(self, data):
         shape = self._shapes[self.count % len(self._shapes)]
         self.count += 1  # runner persists this after run() returns
+        self.run_count += 1
         return TargetAllocation(shape)
